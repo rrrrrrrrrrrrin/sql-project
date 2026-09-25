@@ -11,8 +11,8 @@
 4. Нормализация: приведение таблице к 3NF
 
 Запланированные таблицы:
-1. Независимые таблицы (главные таблицы): accounts (account_id (primary key), username, email,
-phone_number, password_hash (нельзя хранить пароли в открытом виде), balance); 
+1. Независимые таблицы (главные таблицы): accounts (account_id (unique surrogate key), username (compound key), email (compound key),
+phone_number (optional unique attribute), password_hash (нельзя хранить пароли в открытом виде), balance); 
 games (game_id (primary key), title, genre, release_date, price)
 2. Связь one-to-many: dlcs (foreign key связь с games.game_id) (у игры может быть несколько DLC,
 но все они принадлежат одной игре)
@@ -45,6 +45,8 @@ PRIMARY KEY (первичный ключ), FOREIGN KEY (внешний ключ)
 NOT NULL для обязательных полей, UNIQUE (уникальность некоторых
 данных в рамках таблицы), CHECK для ограничения значения данных
 
-Ресурсы: https://it.vshp.online/disciplines/mdk1101/lectures/04_lecture.html,
+Ресурсы: 
+https://www.cybertec-postgresql.com/en/data-normalization-in-postgresql/#normal-forms,
+https://it.vshp.online/disciplines/mdk1101/lectures/04_lecture.html,
 https://it-incubator.io/prosobesim/nodejs-backend/question/databases/sql/relationship/relationship-types,
 https://www.programulin.ru/kak-hranit-paroli-v-bd-php
