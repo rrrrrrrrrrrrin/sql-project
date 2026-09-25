@@ -1,0 +1,50 @@
+Цель проекта: придумать и создать таблицы, связать их, чтобы система
+работала корректно и пользователи не могли испортить данные.
+
+Тема приложения: "Backend онлайн-магазина компьютерных игр"
+
+Функционал разработчика: 
+1. Выделение именованных сущностей (entity recognition)
+(о каких объектах система хранит данные; создание таблиц)
+2. Настройка связи между таблицами (one-to-many, many-to-many)
+3. Создание визуальной ER-модели (ER-диаграммы) (ER — Entity-Relationship) в DBeaver
+4. Нормализация: приведение таблице к 3NF
+
+Запланированные таблицы:
+1. Независимые таблицы (главные таблицы): accounts (account_id (primary key), username, email,
+phone_number, password_hash (нельзя хранить пароли в открытом виде), balance); 
+games (game_id (primary key), title, genre, release_date, price)
+2. Связь one-to-many: dlcs (foreign key связь с games.game_id) (у игры может быть несколько DLC,
+но все они принадлежат одной игре)
+3. Связь many-to-many: library (purchase_date, playtime_hours) (связывает accounts и games;
+у каждого игрока есть таблица с купленными играми, каждая игра может быть куплена несколькими игроками);
+game_reviews (rating, review_text, publish_date) (связывает accounts и games;
+игрок может оставлять отзывы о нескольких играх, у игры может быть несколько отзывов)
+
+База данных будет проверять правильность введенных пользователем данных
+(Data Integrity) (выполнение команд INSERT, UPDATE).
+
+Функционал системы (запланированный минимум). 
+Взаимодействие игроков с базой данных (UI):
+1. Создание аккаунта: добавление нового пользователя по username и email (обязательные уникальные параметры)
+2. Просмотр магазина: фильтрация игр по genre, release_date, price
+3. Покупка игры (добавление игры в library (по account_id, game_id); 
+изменение balance (в таблице accounts)); невозможность купить игру дважды)
+4. Обновление playtime_hours
+5. Оставление отзыва по игре (rating, review_text)
+
+Взаимодействие создателей игр:
+1. Выпуск новой игры или DLC
+2. Удаление игры из магазина (+ удаление dlcs, привязанных по games.game_id)
+
+Анализ базы данных?: продаваемость игр (кол-во повторений game_id в library;
+высчет прибыли за продажу копий игр (games.price; подсчет купленных копий игр в library по account_id)
+(можно учесть продаваемость dlcs, введя dlcs.dlc_price))
+
+PRIMARY KEY (первичный ключ), FOREIGN KEY (внешний ключ),
+NOT NULL для обязательных полей, UNIQUE (уникальность некоторых
+данных в рамках таблицы), CHECK для ограничения значения данных
+
+Ресурсы: https://it.vshp.online/disciplines/mdk1101/lectures/04_lecture.html,
+https://it-incubator.io/prosobesim/nodejs-backend/question/databases/sql/relationship/relationship-types,
+https://www.programulin.ru/kak-hranit-paroli-v-bd-php
