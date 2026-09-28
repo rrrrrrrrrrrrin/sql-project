@@ -11,7 +11,7 @@
 4. Нормализация: приведение таблице к 3NF
 
 Запланированные таблицы:
-1. Независимые таблицы (главные таблицы): accounts (account_id (unique surrogate key), username (compound key), email (compound key),
+1. Независимые таблицы (главные таблицы): accounts (account_id (serial surrogate primary key), username (unique compound key), email (unique compound key),
 phone_number (optional unique attribute), password_hash (нельзя хранить пароли в открытом виде), balance); 
 games (game_id (primary key), title, genre, release_date, price)
 2. Связь one-to-many: dlcs (foreign key связь с games.game_id) (у игры может быть несколько DLC,
