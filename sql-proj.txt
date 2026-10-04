@@ -13,13 +13,15 @@
 Запланированные таблицы:
 1. Независимые таблицы (главные таблицы): accounts (account_id (serial surrogate primary key), username (unique compound key), email (unique compound key),
 phone_number (optional unique attribute), password_hash (нельзя хранить пароли в открытом виде), balance); 
-games (game_id (primary key), title, genre, release_date, price)
+games (game_id (primary key), title, genre, developer, publisher, release_date, price)
 2. Связь one-to-many: dlcs (foreign key связь с games.game_id) (у игры может быть несколько DLC,
-но все они принадлежат одной игре)
-3. Связь many-to-many: library (purchase_date, playtime_hours) (связывает accounts и games;
+но все они принадлежат одной игре) (dlc_id, game_id, title, release_date, price)
+3. Связь many-to-many: library (library_id, acc_id, game_id, dlc_id, dev_id, publish_id, purchase_date, playtime_hours) (связывает accounts и games;
 у каждого игрока есть таблица с купленными играми, каждая игра может быть куплена несколькими игроками);
-game_reviews (rating, review_text, publish_date) (связывает accounts и games;
-игрок может оставлять отзывы о нескольких играх, у игры может быть несколько отзывов)
+game_reviews (review_id, acc_id, game_id, rating, review_text, review_date) (связывает accounts и games;
+игрок может оставлять отзывы о нескольких играх, у игры может быть несколько отзывов);
+dev_lib;
+publish_lib
 
 База данных будет проверять правильность введенных пользователем данных
 (Data Integrity) (выполнение команд INSERT, UPDATE).
@@ -35,7 +37,7 @@ game_reviews (rating, review_text, publish_date) (связывает accounts и
 
 Взаимодействие создателей игр:
 1. Выпуск новой игры или DLC
-2. Удаление игры из магазина (+ удаление dlcs, привязанных по games.game_id)
+2. Удаление игры из магазина (+ удаление dlcs, привязанных по games.game_id (ON DELETE CASCADE))
 
 Анализ базы данных?: продаваемость игр (кол-во повторений game_id в library;
 высчет прибыли за продажу копий игр (games.price; подсчет купленных копий игр в library по account_id)
