@@ -1,0 +1,127 @@
+1. In VSC, in the project folder, create file docker-compose.yml
+name: SQL-PostgreSQL
+
+services:
+  postgres: 
+    image: postgres:19beta4-alpine3.24  # postgres image
+    container_name: gamestore_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gamestore
+    ports:
+      - "5431:5432"
+
+2. In VSC terminal: 
+docker compose up -d
+docker ps (to list all running docker containers)
+docker exec -it gamestore_db sh (to access postgres container's shell)
+psql -U postgres (postgres here is POSTGRES_USER from yml file; to connect to postgres using psql)
+
+To exit: 
+postgres=# exit (exit postgres shell)
+/ # exit (exit docker container)
+
+3.  In shell:
+\l или SELECT datname FROM pg_database; (to look up available databases)
+CREATE DATABASE name;
+DROP DATABASE name;
+\c gamestore (to connect to a database; can't drop it when connected to it; gamestore=#)
+
+4. In docker-compose.yml to add pgadmin (if containers from 1st step exist, delete)
+name: SQL-PostgreSQL
+
+services:
+  postgres: 
+    image: postgres:19beta4-alpine3.24
+    container_name: gamestore_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gamestore
+    ports:
+      - "5431:5432"
+
+  pgadmin:
+      image: dpage/pgadmin4:9.18
+      container_name: gamestore_pgadmin
+      environment:
+        PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: psF7ZCvZeaKV!v5
+      ports:
+        - "5050:80"
+      depends_on:
+        - postgres  # name of postgres service 
+
+5. Type localhost:5050 into browser search bar, it will open pgAdmin
+Insert email and password from PGADMIN_DEFAULT_EMAIL and PGADMIN_DEFAULT_PASSWORD
+
+Use query tool to insert sql code
+
+6. Load JSON data.
+Create db-data folder in project folder.
+In docker-compose-with-database-data.yml:
+name: SQL-PostgreSQL
+
+services:
+  postgres: 
+    image: postgres:19beta4-alpine3.24
+    container_name: gamestore_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gamestore
+    ports:
+      - "5431:5432"
+    volumes:
+      - ./db-data:/data
+
+  pgadmin:
+      image: dpage/pgadmin4:9.18
+      container_name: gamestore_pgadmin
+      environment:
+        PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: psF7ZCvZeaKV!v5
+      ports:
+        - "5050:80"
+      depends_on:
+        - postgres  # name of postgres service 
+
+7. In VSC terminal:
+docker compose -f docker-compose-with-database-data.yml up -d
+(Again:
+docker exec -it gamestore_db sh (to access postgres container's shell)
+psql -U postgres (postgres here is POSTGRES_USER from yml file; to connect to postgres using psql)
+)
+
+8. docker-compose-with-init.yml:
+name: SQL-PostgreSQL
+
+services:
+  postgres: 
+    image: postgres:19beta4-alpine3.24
+    container_name: gamestore_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gamestore
+    ports:
+      - "5431:5432"
+    volumes:
+      - ./db-data:/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  pgadmin:
+      image: dpage/pgadmin4:9.18
+      container_name: gamestore_pgadmin
+      environment:
+        PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: psF7ZCvZeaKV!v5
+      ports:
+        - "5050:80"
+      depends_on:
+        - postgres  # name of postgres service 

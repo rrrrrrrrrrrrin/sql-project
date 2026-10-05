@@ -9,7 +9,7 @@ VALUES (:username, :email, crypt(:user_password, gen_salt('bf')));
 -- 2. Просмотр магазина: фильтрация игр по genre, release_date, developer
 SELECT title, genre FROM games WHERE genre= :genre;
 SELECT title, release_date FROM games WHERE release_date= :release_date  -- YYYY-MM-DD
-SELECT title, dev_id FROM games WHERE dev_id ILIKE :dev_id
+SELECT title, dev_id FROM game_developers WHERE dev_id ILIKE :dev_id
 
 -- 3. Покупка игры (добавление игры в library (по account_id, game_id); 
 -- изменение balance (в таблице accounts)); невозможность купить игру дважды)
