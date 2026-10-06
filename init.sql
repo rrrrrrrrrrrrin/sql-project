@@ -15,6 +15,13 @@ CREATE TABLE games (
     price DECIMAL(10, 2)
 );
 
+-- What if a game has multiple genres?
+/*CREATE TABLE games_genres (
+    game_id INT REFERENCES games(game_id) ON DELETE CASCADE,
+    genre VARCHAR(50),
+    PRIMARY KEY (game_id, genre)
+);*/
+
 CREATE TABLE dlcs (
     dlc_id SERIAL PRIMARY KEY,
     game_id INT REFERENCES games(game_id) ON DELETE CASCADE,

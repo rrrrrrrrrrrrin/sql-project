@@ -3,12 +3,12 @@
         "title": "Resident Evil",
         "release_date": "1996-03-22",
         "genre": "Horror",
-        "price": 0.00
+        "price": 4.99
     }, 
     {
         "title": "Resident Evil 2",
         "release_date": "1998-01-21",
         "genre": "Horror",
-        "price": 0.00
+        "price": 4.99
     }
 ]

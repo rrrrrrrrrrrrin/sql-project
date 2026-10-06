@@ -97,7 +97,9 @@ docker exec -it gamestore_db sh (to access postgres container's shell)
 psql -U postgres (postgres here is POSTGRES_USER from yml file; to connect to postgres using psql)
 )
 
-8. docker-compose-with-init.yml:
+8. 
+docker compose -f docker-compose-with-init.yml up -d
+docker-compose-with-init.yml:
 name: SQL-PostgreSQL
 
 services:
