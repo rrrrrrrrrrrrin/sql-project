@@ -1,0 +1,480 @@
+{
+	"configurations" : 
+	[
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Crow::Crow::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Crow__Crow-Debug-825c1d843e05e19d2e66.json",
+					"name" : "Crow::Crow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PostgreSQL::PostgreSQL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PostgreSQL__PostgreSQL-Debug-9017cdf8ec4abba09cd9.json",
+					"name" : "PostgreSQL::PostgreSQL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Threads::Threads::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Threads__Threads-Debug-15675abf00d63161c2fc.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "asio::asio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-asio__asio-Debug-dbd81d0ff52459056624.json",
+					"name" : "asio::asio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libpqxx::pqxx::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libpqxx__pqxx-Debug-c06626a52e9d8d4ac13e.json",
+					"name" : "libpqxx::pqxx",
+					"projectIndex" : 0
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-b5805d5c08fd3d92def4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gamestore_backend",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Debug-9c26b30d9f2c53710f01.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Debug-fd53962fe25a9004384e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gamestore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gamestore-Debug-fdd9a2b16542cd87ae77.json",
+					"name" : "gamestore",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Crow::Crow::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Crow__Crow-Release-825c1d843e05e19d2e66.json",
+					"name" : "Crow::Crow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PostgreSQL::PostgreSQL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PostgreSQL__PostgreSQL-Release-9017cdf8ec4abba09cd9.json",
+					"name" : "PostgreSQL::PostgreSQL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Threads::Threads::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Threads__Threads-Release-15675abf00d63161c2fc.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "asio::asio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-asio__asio-Release-dbd81d0ff52459056624.json",
+					"name" : "asio::asio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libpqxx::pqxx::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libpqxx__pqxx-Release-c13c9b8b5aa0b78d38eb.json",
+					"name" : "libpqxx::pqxx",
+					"projectIndex" : 0
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-b5805d5c08fd3d92def4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gamestore_backend",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Release-9c26b30d9f2c53710f01.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Release-fd53962fe25a9004384e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gamestore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gamestore-Release-df5706daa51222878757.json",
+					"name" : "gamestore",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Crow::Crow::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Crow__Crow-MinSizeRel-825c1d843e05e19d2e66.json",
+					"name" : "Crow::Crow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PostgreSQL::PostgreSQL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PostgreSQL__PostgreSQL-MinSizeRel-9017cdf8ec4abba09cd9.json",
+					"name" : "PostgreSQL::PostgreSQL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Threads::Threads::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Threads__Threads-MinSizeRel-15675abf00d63161c2fc.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "asio::asio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-asio__asio-MinSizeRel-dbd81d0ff52459056624.json",
+					"name" : "asio::asio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libpqxx::pqxx::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libpqxx__pqxx-MinSizeRel-c13c9b8b5aa0b78d38eb.json",
+					"name" : "libpqxx::pqxx",
+					"projectIndex" : 0
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"build" : ".",
+					"jsonFile" : "directory-.-MinSizeRel-b5805d5c08fd3d92def4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "MinSizeRel",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gamestore_backend",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-9c26b30d9f2c53710f01.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-MinSizeRel-fd53962fe25a9004384e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gamestore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gamestore-MinSizeRel-d16be4851f2d58d1062e.json",
+					"name" : "gamestore",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Crow::Crow::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Crow__Crow-RelWithDebInfo-825c1d843e05e19d2e66.json",
+					"name" : "Crow::Crow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PostgreSQL::PostgreSQL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PostgreSQL__PostgreSQL-RelWithDebInfo-9017cdf8ec4abba09cd9.json",
+					"name" : "PostgreSQL::PostgreSQL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Threads::Threads::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Threads__Threads-RelWithDebInfo-15675abf00d63161c2fc.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "asio::asio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-asio__asio-RelWithDebInfo-dbd81d0ff52459056624.json",
+					"name" : "asio::asio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "libpqxx::pqxx::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libpqxx__pqxx-RelWithDebInfo-c13c9b8b5aa0b78d38eb.json",
+					"name" : "libpqxx::pqxx",
+					"projectIndex" : 0
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"build" : ".",
+					"jsonFile" : "directory-.-RelWithDebInfo-b5805d5c08fd3d92def4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gamestore_backend",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-9c26b30d9f2c53710f01.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-RelWithDebInfo-fd53962fe25a9004384e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gamestore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gamestore-RelWithDebInfo-84a3bb4bfba1482bb285.json",
+					"name" : "gamestore",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Lenovo/Desktop/sql-project/backend/build",
+		"source" : "C:/Users/Lenovo/Desktop/sql-project/backend"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 11
+	}
+}

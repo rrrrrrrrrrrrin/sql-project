@@ -1,0 +1,13 @@
+prefix=${pcfiledir}/../..
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: libecpg
+Description: PostgreSQL libecpg library
+URL: https://www.postgresql.org/
+Version: 18.4
+Requires.private: zlib, liblz4, openssl, libpgtypes, libpq
+Libs: "-L${libdir}" -llibecpg
+Libs.private: -lws2_32 "-L${libdir}" -llibpgport_shlib -llibpgcommon_shlib
+Cflags: "-I${includedir}"
+

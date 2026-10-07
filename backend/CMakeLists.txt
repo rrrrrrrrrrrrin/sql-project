@@ -1,5 +1,3 @@
-// Tells CMake how to compile C++ backend and link Crow + PostgreSQL
-
 cmake_minimum_required(VERSION 3.20)
 
 project(gamestore_backend)

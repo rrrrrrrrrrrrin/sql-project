@@ -39,5 +39,5 @@ PostgreSQL
    Docker
 
 (backend:)
-Crow   → HTTP API
+Crow (need vcpkg to use; My location: C:\dev\vcpkg) → HTTP API
 libpqxx → PostgreSQL

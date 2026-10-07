@@ -139,3 +139,20 @@ Assuming in sql-project there is a folder called frontend:
 cd frontend 
 npm install
 npm run dev
+
+Next time in frontend: npm run dev (opens localhost:5173)
+
+10. In sql-project folder, in VSC, in backend folder! (not necessarily cd backend),
+with CMake Tools extension installed in VSC (and obvi CMake on Windows in PATH), 
+Ctrl + Shift + P: CMake: Select Configure Preset (-> windowsx64), CMake: Configure, CMake: Build,
+(wait until prev command ends in output b4 running next one).
+
+Then, \build\Debug\gamestore.exe. It should open localhost:8080
+
+Obviously, for steps 10-11 React, Vite, CMake (and Crow) should all have correct code in files they generate:
+ex. for \backend\vcpkg.json should list all c++ libs used in project (ex., crow, libpqxx); 
+ex. .json or CMake files shouldn't have comments!!!;
+ex. in CMakePresets.json "generator": should specify PC's Visual Studio version
+During CMake Configure and Build, there is an option to debug errors, ex. in Output, there was written
+a usable version of VS to pass into "generator": field. 
+
