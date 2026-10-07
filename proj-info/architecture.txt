@@ -1,0 +1,43 @@
+sql-project/
+│
+├── docker-compose.yml (docker + volumes + pgAdmin)
+│
+├── gamestore_db/
+│   ├── init.sql 
+│   ├── load-data.sql
+│   ├── games.json
+│   └── games.csv
+│
+├── backend/
+│   ├── CMakeLists.txt (tells CMake how to build C++)
+│   ├── CMakePresets.json (tells CMake which compiler (VS/MSVC) and vcpkg to use)
+│   ├── vcpkg.json (to list c++ libs)
+│   └── src/
+│       ├── main.cpp (C++ web server)
+│       ├── Database.h
+│       ├── Database.cpp
+│       ├── GameRepository.h
+│       ├── GameRepository.cpp
+│       └── ...
+│
+└── frontend/
+    ├── package.json (created by Vite)
+    ├── vite.config.js (React → C++ API proxy) 
+    └── src/
+        ├── App.jsx (main React UI)
+        ├── pages/
+        ├── components/
+        └── api/
+
+
+React + Vite + Tailwind CSS
+      ↓ HTTP/JSON
+C++ REST API
+      ↓ SQL
+PostgreSQL
+      ↑
+   Docker
+
+(backend:)
+Crow   → HTTP API
+libpqxx → PostgreSQL

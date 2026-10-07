@@ -25,3 +25,4 @@ services:
         - "5050:80"
       depends_on:
         - postgres  # name of postgres service 
+        

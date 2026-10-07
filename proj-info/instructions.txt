@@ -127,3 +127,15 @@ services:
         - "5050:80"
       depends_on:
         - postgres  # name of postgres service 
+
+9. In sql-project folder (React + Vite):
+npm create vite@latest frontend -- --template react
+(needs node.js installed in Windows; automatically adds npm to PATH;
+to not receive "running scripts disabled on this system" warning (from powershell)
+running npm, in powershell (as administrator)Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned,
+then choose Y)
+
+Assuming in sql-project there is a folder called frontend:
+cd frontend 
+npm install
+npm run dev
