@@ -140,7 +140,7 @@ cd frontend
 npm install
 npm run dev
 
-Next time in frontend: npm run dev (opens localhost:5173)
+Next time in frontend folder: npm run dev (opens localhost:5173)
 
 10. In sql-project folder, in VSC, in backend folder! (not necessarily cd backend),
 with CMake Tools extension installed in VSC (and obvi CMake on Windows in PATH), 
@@ -155,4 +155,14 @@ ex. .json or CMake files shouldn't have comments!!!;
 ex. in CMakePresets.json "generator": should specify PC's Visual Studio version
 During CMake Configure and Build, there is an option to debug errors, ex. in Output, there was written
 a usable version of VS to pass into "generator": field. 
+
+Next time: 
+In backend folder: Ctrl + Shift + P, CMake: Build
+cd backend, .\build\Debug\gamestore.exe (run backend)
+Website accessible from frontend (cd frontend, nmp run dev)
+cd database, docker compose -f docker-compose-with-init.yml up -d
+
+When making changes on code (or if there are specific errors), do the routine again,
+Ctrl + C previous sessions (or kill terminal)
+
 

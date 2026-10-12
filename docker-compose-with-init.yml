@@ -20,7 +20,7 @@ services:
       container_name: gamestore_pgadmin
       environment:
         PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
-        PGADMIN_DEFAULT_PASSWORD: psF7ZCvZeaKV!v5
+        PGADMIN_DEFAULT_PASSWORD: password
       ports:
         - "5050:80"
       depends_on:
