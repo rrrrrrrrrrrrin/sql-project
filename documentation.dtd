@@ -1,0 +1,27 @@
+<!ELEMENT documentation (description, data-section, user-roles, interfaces, tech-stack, testing)>
+
+<!ELEMENT description (name, domain)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT domain (#PCDATA)>
+
+<!ELEMENT data-section (data-elements, global-integrity-constraints)>
+<!ELEMENT data-elements (element+)>
+<!ELEMENT element (name, constraints)>
+<!ELEMENT constraints (#PCDATA)>
+<!ELEMENT global-integrity-constraints (#PCDATA)>
+
+<!ELEMENT user-roles (role+)>
+<!ELEMENT role (role-name, responsibility, user-count)>
+<!ELEMENT role-name (#PCDATA)>
+<!ELEMENT responsibility (#PCDATA)>
+<!ELEMENT user-count (#PCDATA)>
+
+<!ELEMENT interfaces (ui?, api?)>
+<!ELEMENT ui (#PCDATA)>
+<!ELEMENT api (#PCDATA)>
+
+<!ELEMENT tech-stack (programming-lang, dbms)>
+<!ELEMENT programming-lang (#PCDATA)>
+<!ELEMENT dbms (#PCDATA)>
+
+<!ELEMENT testing (#PCDATA)>

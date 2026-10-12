@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE documentation SYSTEM "documentation.dtd">
+<documentation>
+    
+    <description>
+        <name>Наименование проекта</name>
+        <domain>Предметная область</domain>
+    </description>
+    
+    <data-section>
+        <data-elements>
+            <element>
+                <name>ИмяЭлемента1</name>
+                <constraints>Ограничения для первого элемента</constraints>
+            </element>
+            <element>
+                <name>ИмяЭлемента2</name>
+                <constraints>Ограничения для второго элемента</constraints>
+            </element>
+        </data-elements>
+        <global-integrity-constraints>
+            Общие ограничения целостности данных
+        </global-integrity-constraints>
+    </data-section>
+    
+    <user-roles>
+        <role>
+            <role-name>Администратор</role-name>
+            <responsibility>Ответственность и права роли</responsibility>
+            <user-count>5</user-count>
+        </role>
+    </user-roles>
+    
+    <interfaces>
+        <ui>Описание пользовательского интерфейса (UI)</ui>
+        <api>Описание программного интерфейса (API)</api>
+    </interfaces>
+    
+    <tech-stack>
+        <programming-lang>Язык программирования</programming-lang>
+        <dbms>СУБД</dbms>
+    </tech-stack>
+    
+    <testing>
+        Описание стратегии и требований к тестированию
+    </testing>
+    
+</documentation>
