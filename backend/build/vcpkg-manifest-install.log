@@ -1,4 +1,5 @@
 Detecting compiler hash for triplet x64-windows...
+-- Automatically setting %HTTP(S)_PROXY% environment variables to "127.0.0.1:10809".
 Compiler found: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe
 The following packages are already installed:
   * asio:x64-windows@1.32.0
@@ -25,4 +26,4 @@ libpqxx provides CMake targets:
   find_package(libpqxx CONFIG REQUIRED)
   target_link_libraries(main PRIVATE libpqxx::pqxx)
 
-All requested installations completed successfully in: 1.99 ms
+All requested installations completed successfully in: 703 us

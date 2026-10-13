@@ -1,3 +1,4 @@
+
 <!ELEMENT documentation (description, data-section, user-roles, interfaces, tech-stack, testing)>
 
 <!ELEMENT description (name, domain)>
@@ -6,9 +7,17 @@
 
 <!ELEMENT data-section (data-elements, global-integrity-constraints)>
 <!ELEMENT data-elements (element+)>
-<!ELEMENT element (name, constraints)>
+
+<!-- Allows both table definitions and column definitions -->
+<!ELEMENT element ((table, columns) | (name, constraints, data_type))>
+
+<!ELEMENT table (#PCDATA)>
+<!ELEMENT columns (element+)>
 <!ELEMENT constraints (#PCDATA)>
-<!ELEMENT global-integrity-constraints (#PCDATA)>
+<!ELEMENT data_type (#PCDATA)>
+
+<!ELEMENT global-integrity-constraints (constraint+)>
+<!ELEMENT constraint (#PCDATA)>
 
 <!ELEMENT user-roles (role+)>
 <!ELEMENT role (role-name, responsibility, user-count)>

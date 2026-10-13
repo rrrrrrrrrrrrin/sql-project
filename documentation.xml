@@ -1,48 +1,448 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE documentation SYSTEM "documentation.dtd">
 <documentation>
-    
+    <!-- Описание проекта -->
     <description>
-        <name>Наименование проекта</name>
-        <domain>Предметная область</domain>
+        <name>Backend онлайн-магазина компьютерных игр</name>
+        <domain>
+            Предметная область: 
+            автоматизация учета цифровых лицензий (ключей) (продается не физический товар, а код для игры, т.е. цифровой контент),
+            каталогизация игрового контента,
+            обеспечение безопасных транзакций между игроком и издателем.
+        </domain>
     </description>
     
+    <!-- 
+        Данные;
+        для каждого элемента данных: 
+            имя, 
+            ограничения на значения, 
+            тип данных
+    -->
     <data-section>
+
         <data-elements>
+
+            <!-- 1. Accounts -->
             <element>
-                <name>ИмяЭлемента1</name>
-                <constraints>Ограничения для первого элемента</constraints>
+                <table>accounts</table>
+                <columns>
+                    <element>
+                        <name>account_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>username</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(32)</data_type>
+                    </element>
+                    <element>
+                        <name>email</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(254)</data_type>
+                    </element>
+                    <element>
+                        <name>phone_number</name>
+                        <constraints>UNIQUE; DEFAULT NULL; NULL ALLOWED</constraints>
+                        <data_type>VARCHAR(15)</data_type>
+                    </element>
+                    <element>
+                        <name>password_hash</name>
+                        <constraints>NOT NULL</constraints>
+                        <data_type>TEXT</data_type>
+                    </element>
+                    <element>
+                        <name>balance</name>
+                        <constraints>NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                </columns>
             </element>
+
+            <!-- 2. Games -->
             <element>
-                <name>ИмяЭлемента2</name>
-                <constraints>Ограничения для второго элемента</constraints>
+                <table>games</table>
+                <columns>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>title</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(100)</data_type>
+                    </element>
+                    <element>
+                        <name>release_date</name>
+                        <constraints>NOT NULL</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                    <element>
+                        <name>genre</name>
+                        <constraints>NOT NULL</constraints>
+                        <data_type>VARCHAR(50)</data_type>
+                    </element>
+                    <element>
+                        <name>price</name>
+                        <constraints>CHECK (price &gt;= 0); NULL ALLOWED</constraints>
+                        <data_type>DECIMAL(10,2)</data_type>
+                    </element>
+                </columns>
             </element>
+
+            <!-- 3. DLCs -->
+            <element>
+                <table>dlcs</table>
+                <columns>
+                    <element>
+                        <name>dlc_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>FOREIGN KEY REFERENCES games(game_id); ON DELETE CASCADE; NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>title</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(100)</data_type>
+                    </element>
+                    <element>
+                        <name>release_date</name>
+                        <constraints>NOT NULL</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                    <element>
+                        <name>price</name>
+                        <constraints>CHECK (price &gt;= 0); NULL ALLOWED</constraints>
+                        <data_type>DECIMAL(10,2)</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 4. Library -->
+            <element>
+                <table>library</table>
+                <columns>
+                    <element>
+                        <name>library_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>account_id</name>
+                        <constraints>FOREIGN KEY REFERENCES accounts(account_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>FOREIGN KEY REFERENCES games(game_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>dlc_id</name>
+                        <constraints>FOREIGN KEY REFERENCES dlcs(dlc_id); ON DELETE CASCADE; NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>purchase_date</name>
+                        <constraints>DEFAULT CURRENT_DATE; NOT NULL</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                    <element>
+                        <name>playtime_hours</name>
+                        <constraints>DEFAULT 0; CHECK (playtime_hours &gt;= 0); NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 5. Game reviews -->
+            <element>
+                <table>game_reviews</table>
+                <columns>
+                    <element>
+                        <name>review_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>FOREIGN KEY REFERENCES games(game_id); ON DELETE CASCADE; NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>account_id</name>
+                        <constraints>FOREIGN KEY REFERENCES accounts(account_id); ON DELETE CASCADE; NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>rating</name>
+                        <constraints>CHECK (rating &gt;= 1 AND rating &lt;= 10); NULL ALLOWED</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>review_text</name>
+                        <constraints>NULL ALLOWED</constraints>
+                        <data_type>TEXT</data_type>
+                    </element>
+                    <element>
+                        <name>review_date</name>
+                        <constraints>DEFAULT CURRENT_DATE; NOT NULL</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 6. Developers -->
+            <element>
+                <table>developers</table>
+                <columns>
+                    <element>
+                        <name>dev_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>name</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(100)</data_type>
+                    </element>
+                    <element>
+                        <name>founded_date</name>
+                        <constraints>NULL ALLOWED</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 7. Publishers -->
+            <element>
+                <table>publishers</table>
+                <columns>
+                    <element>
+                        <name>publish_id</name>
+                        <constraints>PRIMARY KEY; AUTO-GENERATED; NOT NULL</constraints>
+                        <data_type>SERIAL</data_type>
+                    </element>
+                    <element>
+                        <name>name</name>
+                        <constraints>UNIQUE; NOT NULL</constraints>
+                        <data_type>VARCHAR(100)</data_type>
+                    </element>
+                    <element>
+                        <name>founded_date</name>
+                        <constraints>NULL ALLOWED</constraints>
+                        <data_type>DATE</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 8. Game developers -->
+            <element>
+                <table>game_developers</table>
+                <columns>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>COMPOSITE PRIMARY KEY; FOREIGN KEY REFERENCES games(game_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>dev_id</name>
+                        <constraints>COMPOSITE PRIMARY KEY; FOREIGN KEY REFERENCES developers(dev_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                </columns>
+            </element>
+
+            <!-- 9. Game publishers -->
+            <element>
+                <table>game_publishers</table>
+                <columns>
+                    <element>
+                        <name>game_id</name>
+                        <constraints>COMPOSITE PRIMARY KEY; FOREIGN KEY REFERENCES games(game_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                    <element>
+                        <name>publish_id</name>
+                        <constraints>COMPOSITE PRIMARY KEY; FOREIGN KEY REFERENCES publishers(publish_id); ON DELETE CASCADE; NOT NULL</constraints>
+                        <data_type>INT</data_type>
+                    </element>
+                </columns>
+            </element>
+
         </data-elements>
+
+        <!-- Общие ограничения целостности -->
         <global-integrity-constraints>
-            Общие ограничения целостности данных
+
+            <constraint>
+                PRIMARY KEY: гарантирует уникальность идентификатора записи и не допускает NULL.
+            </constraint>
+
+            <constraint>
+                SERIAL: автоматически генерирует идентификатор с использованием последовательности.
+            </constraint>
+
+            <constraint>
+                UNIQUE: не допускает повторяющихся значений в соответствующем столбце или наборе столбцов. В PostgreSQL UNIQUE обычно допускает несколько NULL.
+            </constraint>
+
+            <constraint>
+                NOT NULL: запрещает отсутствие значения в обязательном столбце.
+            </constraint>
+
+            <constraint>
+                FOREIGN KEY: обеспечивает ссылочную целостность между связанными таблицами.
+            </constraint>
+
+            <constraint>
+                ON DELETE CASCADE: при удалении родительской записи автоматически удаляет связанные записи.
+            </constraint>
+
+            <constraint>
+                CHECK (price &gt;= 0): запрещает отрицательные цены игр и DLC. NULL допускается, поскольку NOT NULL не задан.
+            </constraint>
+
+            <constraint>
+                CHECK (playtime_hours &gt;= 0): запрещает отрицательное время игры. NULL допускается, поскольку NOT NULL не задан.
+            </constraint>
+
+            <constraint>
+                CHECK (rating &gt;= 1 AND rating &lt;= 10): ограничивает рейтинг диапазоном от 1 до 10. NULL допускается.
+            </constraint>
+
+            <constraint>
+                DEFAULT NULL: для phone_number отсутствие значения заменяется на NULL. Это поведение совпадает с поведением столбца без явно заданного DEFAULT.
+            </constraint>
+
+            <constraint>
+                DEFAULT CURRENT_DATE: устанавливает текущую дату, если значение не задано явно.
+            </constraint>
+
+            <constraint>
+                DEFAULT 0: устанавливает значение playtime_hours равным 0, если оно не задано явно.
+            </constraint>
+
+            <constraint>
+                unique_account_game: уникальный индекс для пары (account_id, game_id), когда dlc_id IS NULL. Один аккаунт не может иметь повторные записи покупки одной игры.
+            </constraint>
+
+            <constraint>
+                unique_account_dlc: уникальный индекс для пары (account_id, dlc_id), когда dlc_id IS NOT NULL. Один аккаунт не может иметь повторные записи покупки одного DLC.
+            </constraint>
+
+            <constraint>
+                game_developers: составной первичный ключ (game_id, dev_id) запрещает повторение пары игры и разработчика.
+            </constraint>
+
+            <constraint>
+                game_publishers: составной первичный ключ (game_id, publish_id) запрещает повторение пары игры и издателя.
+            </constraint>
+
+            <constraint>
+                В таблице accounts поле password_hash обязательно для заполнения. Само по себе это ограничение не выполняет хеширование пароля.
+            </constraint>
+
+            <constraint>
+                В таблицах games и dlcs поле release_date обязательно для заполнения.
+            </constraint>
+
+            <constraint>
+                В таблице games поле genre обязательно для заполнения.
+            </constraint>
+
+            <constraint>
+                В таблице library account_id и game_id обязательны, purchase_date обязательна, а dlc_id может быть NULL.
+            </constraint>
+
+            <constraint>
+                Схема не содержит ограничения, гарантирующего, что для записи library заполнено ровно одно из полей game_id и dlc_id.
+            </constraint>
+
+            <constraint>
+                Поле balance не имеет ограничения CHECK на неотрицательность.
+            </constraint>
+
+            <constraint>
+                В таблице dlcs поле game_id может быть NULL, поскольку для внешнего ключа не указано NOT NULL.
+            </constraint>
+
+            <constraint>
+                Таблица games_genres закомментирована в исходном SQL и не входит в действующую схему.
+            </constraint>
+
         </global-integrity-constraints>
+
     </data-section>
     
+    <!-- 
+        Пользовательские роли;
+        для каждой роли: 
+            имя, 
+            ответсвтенность и права, 
+            количество пользователей с данной ролью
+    -->
     <user-roles>
+
         <role>
-            <role-name>Администратор</role-name>
-            <responsibility>Ответственность и права роли</responsibility>
-            <user-count>5</user-count>
+            <role-name>Игрок</role-name>
+            <responsibility>
+                Регистрация в системе (accounts),
+                покупка игр и DLC (library),
+                написание отзывов (game_reviews),
+                просмотр каталога игр (games, dlcs).
+            </responsibility>
+            <user-count>Не ограничено</user-count>
         </role>
+
+        <role>
+            <role-name>Издатель</role-name>
+            <responsibility>
+                Выпускает новые игры и DLC (games, dlcs),
+                управляет своими играми и DLC (games, dlcs),
+                просматривает отзывы игроков (game_reviews).
+            </responsibility>
+            <user-count>Не ограничено</user-count>
+        </role>
+
+        <role>
+            <role-name>Разработчик</role-name>
+            <responsibility>
+                Полный доступ к инфраструктуре бэкенда, фронтенда и СУБД.
+            </responsibility>
+            <user-count>1</user-count>
+        </role>
+
+        <!--
+            <role>
+                <role-name>Администратор магазина (Менеджер поддержки)</role-name>
+                <responsibility>Модерация сообщества, помощь пользователям, управление контентом.</responsibility>
+                <user-count>1</user-count>
+            </role>
+        -->
+
     </user-roles>
     
+    <!-- UI/API-->
     <interfaces>
         <ui>Описание пользовательского интерфейса (UI)</ui>
         <api>Описание программного интерфейса (API)</api>
     </interfaces>
     
+    <!-- Технологии разработки -->
     <tech-stack>
-        <programming-lang>Язык программирования</programming-lang>
-        <dbms>СУБД</dbms>
+        <programming-lang>Database: SQL, backend: C++, frontend: HTML/CSS/TypeScript</programming-lang>
+        <dbms>PostgreSQL</dbms>
     </tech-stack>
     
     <testing>
-        Описание стратегии и требований к тестированию
+        Тестирование
     </testing>
     
 </documentation>

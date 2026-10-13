@@ -1,7 +1,12 @@
 Цель проекта: придумать и создать таблицы, связать их, чтобы система
 работала корректно и пользователи не могли испортить данные.
 
-Тема приложения: "Backend онлайн-магазина компьютерных игр"
+Название: GameStore
+Тема приложения: "Backend онлайн-магазина компьютерных игр".
+Предметная облась: 
+автоматизация учета цифровых лицензий (ключей) (продается не физический товар, а код для игры, т.е. цифровой контент),
+каталогизация игрового контента,
+обеспечение безопасных транзакций между игроком и издателем.
 
 Функционал разработчика: 
 1. Выделение именованных сущностей (entity recognition)
@@ -52,3 +57,14 @@ https://www.cybertec-postgresql.com/en/data-normalization-in-postgresql/#normal-
 https://it.vshp.online/disciplines/mdk1101/lectures/04_lecture.html,
 https://it-incubator.io/prosobesim/nodejs-backend/question/databases/sql/relationship/relationship-types,
 https://www.programulin.ru/kak-hranit-paroli-v-bd-php
+https://www.youtube.com/watch?v=26ls5lNiijk&list=LL&index=37
+
+
+
+
+
+
+
+
+
+

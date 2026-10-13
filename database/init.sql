@@ -2,17 +2,17 @@ CREATE TABLE accounts (
 	account_id SERIAL PRIMARY KEY,
 	username VARCHAR(32) UNIQUE NOT NULL,
 	email VARCHAR(254) UNIQUE NOT NULL,
-	phone_number VARCHAR(15) UNIQUE DEFAULT 'No phone number',
-	password_hash TEXT,  -- TODO: transform input password to hash
+	phone_number VARCHAR(15) UNIQUE DEFAULT NULL,
+	password_hash TEXT NOT NULL,  -- TODO: transform input password to hash
 	balance INT
 );
 
 CREATE TABLE games (
     game_id SERIAL PRIMARY KEY,
     title VARCHAR(100) UNIQUE NOT NULL,
-    release_date DATE,
-    genre VARCHAR(50),
-    price DECIMAL(10, 2)
+    release_date DATE NOT NULL,
+    genre VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) CHECK (price >= 0)
 );
 
 -- What if a game has multiple genres?
@@ -26,17 +26,17 @@ CREATE TABLE dlcs (
     dlc_id SERIAL PRIMARY KEY,
     game_id INT REFERENCES games(game_id) ON DELETE CASCADE,
     title VARCHAR(100) UNIQUE NOT NULL,
-    release_date DATE,
-    price DECIMAL(10, 2)
+    release_date DATE NOT NULL,
+    price DECIMAL(10, 2) CHECK (price >= 0)
 );
 
 CREATE TABLE library (
     library_id SERIAL PRIMARY KEY,
-    account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
-    game_id INT REFERENCES games(game_id) ON DELETE CASCADE,
+    account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE NOT NULL,
+    game_id INT REFERENCES games(game_id) ON DELETE CASCADE NOT NULL,
     dlc_id INT REFERENCES dlcs(dlc_id) ON DELETE CASCADE,
-    purchase_date DATE DEFAULT CURRENT_DATE,
-    playtime_hours INT DEFAULT 0
+    purchase_date DATE DEFAULT CURRENT_DATE NOT NULL,
+    playtime_hours INT DEFAULT 0 CHECK (playtime_hours >= 0)
 );
 
 -- Один аккаунт может купить конкретную игру только один раз
@@ -55,7 +55,7 @@ CREATE TABLE game_reviews (
     account_id INT REFERENCES accounts(account_id) ON DELETE CASCADE,
     rating INT CHECK (rating >= 1 AND rating <= 10),
     review_text TEXT,
-    review_date DATE DEFAULT CURRENT_DATE
+    review_date DATE DEFAULT CURRENT_DATE NOT NULL
 );
 
 CREATE TABLE developers (
