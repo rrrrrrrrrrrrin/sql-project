@@ -157,10 +157,17 @@ During CMake Configure and Build, there is an option to debug errors, ex. in Out
 a usable version of VS to pass into "generator": field. 
 
 Next time: 
-In backend folder: Ctrl + Shift + P, CMake: Build
-cd backend, .\build\Debug\gamestore.exe (run backend)
-Website accessible from frontend (cd frontend, nmp run dev)
-cd database, docker compose -f docker-compose-with-init.yml up -d
+1. In backend folder: Ctrl + Shift + P, CMake: Build
+   cd backend, .\build\Debug\gamestore.exe (run backend)
+2. Website accessible from frontend (cd frontend, nmp run dev)
+3. In main folder: docker compose -f docker-compose-with-init.yml up -d
+   docker ps (to list all running docker containers)
+   docker exec -it gamestore_db sh (to access postgres container's shell)
+   psql -U postgres (postgres here is POSTGRES_USER from yml file; to connect to postgres using psql)
+   \c gamestore
+
+  localhost:5050 -> log in (email and password from pgadmin yaml section) ->
+  -> register server: username!!! and password from another section in yaml, Host: docker compose server name (postgres) from yaml!!!
 
 When making changes on code (or if there are specific errors), do the routine again,
 Ctrl + C previous sessions (or kill terminal)
