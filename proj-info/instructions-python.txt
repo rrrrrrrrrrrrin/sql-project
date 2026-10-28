@@ -1,0 +1,38 @@
+1. Install python, run -py -0p in powershell and add the address to PATH
+(C:\Users\Lenovo\AppData\Local\Programs\Python\Python314\python.exe). 
+Add C:\Users\Lenovo\AppData\Local\Programs\Python\Python314\Scripts\ to PATH as well.
+Check in powershell: python --version.
+
+2. In VSC:
+cd C:\Users\Lenovo\Desktop\sql-project\backend
+py -m venv .venv
+This creates a virtual environment in backend\.venv. 
+It keeps the Python packages for this project separate from other projects on computer.
+
+3. In VSC, install libraries:
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+
+4. In VSC, install:
+.\.venv\Scripts\python.exe -m pip install "fastapi[standard]" "sqlalchemy>=2.0" "psycopg[binary]" alembic pydantic-settings "pwdlib[argon2]" "PyJWT[crypto]" pytest httpx
+
+Packages installed:
+FastAPI (backend API), SQLAlchemy (ORM [Object-Relational Mapping] for PostgreSQL), Psycopg (connecting Python to PostgreSQL), Alembic (Database schema migrations),
+Pydantic Settings (Manage configuration), pwdlib (Hash and verify passwords (in accounts table)), PyJWT (Work with authentication tokens), pytest and HTTPX (Test backend and API)
+
+5. After adding main.py to backend folder, open a terminal (cd C:\Users\Lenovo\Desktop\sql-project\backend):
+.\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+
+localhost:8080
+
+6. Save dependencies: .\.venv\Scripts\python.exe -m pip freeze > requirements.txt
+
+This creates backend/requirements.txt, recording the installed package versions. Later, Docker and my CI (Continuous Integration) workflow can use this file to install the dependencies.
+
+7. Create .gitignore in backend:
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.pytest_cache/
+
+8. 

@@ -1,8 +1,0 @@
-================================================================================
-Linker Errors
-Generated: 2026-10-12T17:43:36.515Z
-Total Errors: 1
-================================================================================
-
-[LNK1168] (MSVC)
-cannot open C:\Users\Lenovo\Desktop\sql-project\backend\build\Debug\gamestore.exe for writing [C:\Users\Lenovo\Desktop\sql-project\backend\build\gamestore.vcxproj]
