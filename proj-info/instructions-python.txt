@@ -35,4 +35,96 @@ __pycache__/
 .env
 .pytest_cache/
 
-8. 
+8. Connecting FastAPI to existing PostgreSQL gamestore db:
+1) Check that PostgreSQL is running: in main project folder terminal run: docker compose -f docker-compose-with-init.yml up -d
+
+[2) In backend folder: .\.venv\Scripts\python.exe -m pip install sqlalchemy "psycopg[binary]" python-dotenv
+We are using SQLAlchemy to query PostgreSQL and .env to keep the database connection settings out of my Python code. Uses Psycopg connection format.
+Probably already installed, just a check!!!]
+
+3) Create a new file .env in backend folder, its contents:
+DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5431/gamestore
+
+4) Updated main.py. FastAPI will reload automatically after new main.py is saved
+To reload manually: .\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+
+5) To check games api: localhost:8080/api/games
+Interactive API docs: localhost:8080/docs
+
+=> FastAPI doesn't see PostgreSQL database gamestore (therefore it doesn't see games table, etc.)
+
+Solution: 6) VERY IMPORTANT EDIT CONCERNING PORTS IN DOCKER COMPOSE!!!
+I had an error that my password was wrong when i tried to run .\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+command in backend folder. The problem wasn't the password tho.
+
+[it could be as logging into the pgAdmin website uses account credentials (docker compose pgadmin service),
+connecting pgAdmin to PostgreSQL uses a seperate database username and password (can match, listed in docker compose file under posgres service),
+Python app connects directly to PostgreSQL at its localhost address (docker compose -> service postgres -> ports -"LOCALHOST ADDRESS":"5432")]
+
+The problem was that there were 2 PostgreSQL servers and IPv4 goes to the wrong one
+
+'''''''''''''''''''''''''''''''''''''''''''
+Prove: in sql-project folder:
+Where Docker thinks it published the port: docker port gamestore_db 
+5432/tcp -> 0.0.0.0:5431
+5432/tcp -> [::]:5431
+This only says "Docker wants to listen on 5431." It does not prove Docker actually owns 5431.
+
+The command that found the bug:
+Get-NetTCPConnection -LocalPort 5431 -State Listen |
+    Select-Object LocalAddress, LocalPort, OwningProcess |
+    ForEach-Object {
+        $p = Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue
+        [pscustomobject]@{
+            Address = $_.LocalAddress
+            Port    = $_.LocalPort
+            PID     = $_.OwningProcess
+            Process = $p.ProcessName
+            Path    = $p.Path
+        }
+    } | Format-Table -AutoSize
+
+
+Address Port   PID Process            Path
+------- ----   --- -------            ----
+::      5431 14980 com.docker.backend C:\Users\Lenovo\AppData\...\DockerDesktop\...
+0.0.0.0 5431  7136 postgres           (native Windows PostgreSQL)
+
+Port 5431 was claimed by two different processes on two different address families:
+IPv6 (Address ::, process: com.docker.backend; docker container), IPv4 (Address: 0.0.0.0, process: postgres.exe; Native Windows PostgreSQL 18)
+
+Inside the container, PostgreSQL still listens on 5432. Windows host (my Python, uvicorn, browser): localhost (address), 5433 (port)
+
+Check 5433 is free first:
+Get-NetTCPConnection -LocalPort 5433 -State Listen -ErrorAction SilentlyContinue
+# no output = free
+'''''''''''''''''''''''''''''''''''''''''''
+
+Edit docker-compose-with-init.yml. Change 
+ports: 
+  - "5433:5432"
+
+Edit backend/.env:
+DATABASE_URL=postgresql+psycopg://postgres:password@127.0.0.1:5433/gamestore
+
+Reacreate container mapping:
+cd C:\Users\Lenovo\Desktop\sql-project
+docker compose -f docker-compose-with-init.yml up -d
+docker port gamestore_db
+
+Run Python check in backend folder:
+.\.venv\Scripts\python.exe -c "from dotenv import
+load_dotenv; load_dotenv(); 
+from sqlalchemy import create_engine, text; 
+import os; e=create_engine(os.environ['DATABASE_URL']); 
+c=e.connect(); 
+print(c.execute(text('SELECT current_database(), current_user')).fetchone()); 
+c.close()"
+
+Expected: ('gamestore', 'postgres')
+
+6) Start backend in backend folder (docker compose should be running):
+.\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+
+
+

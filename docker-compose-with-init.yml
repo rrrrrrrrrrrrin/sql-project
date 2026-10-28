@@ -1,8 +1,6 @@
-name: SQL-PostgreSQL
-
 services:
-  postgres: 
-    image: postgres:19beta4-alpine3.24
+  postgres:
+    image: postgres:17-alpine
     container_name: gamestore_db
     restart: always
     environment:
@@ -10,19 +8,18 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: gamestore
     ports:
-      - "5431:5432"
+      - "5433:5432"
     volumes:
-      - ./database:/db-data/data
-      - ./database:/init.sql/docker-entrypoint-initdb.d/database/init.sql
+      - ./pgdata:/var/lib/postgresql/data 
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro 
 
   pgadmin:
-      image: dpage/pgadmin4:9.18
-      container_name: gamestore_pgadmin
-      environment:
-        PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
-        PGADMIN_DEFAULT_PASSWORD: password
-      ports:
-        - "5050:80"
-      depends_on:
-        - postgres  # name of postgres service 
-        
+    image: dpage/pgadmin4:9.18
+    container_name: gamestore_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 0arinaberdieva@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
