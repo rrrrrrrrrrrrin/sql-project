@@ -1,1 +1,1 @@
-COPY games (title, release_date, genre, price) FROM '/db-data/data/db-data/games.csv' DELIMITER ',' CSV HEADER;
+COPY games (title, release_date, genre, price) FROM '/db-data/games.csv' DELIMITER ',' CSV HEADER;

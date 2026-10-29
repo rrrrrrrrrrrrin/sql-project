@@ -104,6 +104,12 @@ Edit docker-compose-with-init.yml. Change
 ports: 
   - "5433:5432"
 
+Recreate a docker container 
+(also i replaced a posgresql image with another version [postgres:17-alpine],
+and changed addresses in volumes [now tables seem to be initialized in gamestore db for sure...]):
+delete a container in docker, then compose it again in VSC: 
+docker compose -f docker-compose-with-init.yml up -d
+
 Edit backend/.env:
 DATABASE_URL=postgresql+psycopg://postgres:password@127.0.0.1:5433/gamestore
 
@@ -123,8 +129,29 @@ c.close()"
 
 Expected: ('gamestore', 'postgres')
 
-6) Start backend in backend folder (docker compose should be running):
+6) Start backend in backend!!! folder (docker compose should be running so that the database is running):
 .\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+
+7) Important: after every change to the docker compose file, delete container and compose it again.
+In docker compose file: 
+add - ./database/db-data:/db-data to volumes
+
+The left side (./database/db-data:) is the folder on my computer. The right side (/db-data) is the folder inside the container.
+(I map my local folder to a virtual one with the same name [that I've given])
+
+The address also works (./database/...) bcs docker compose file is in the sql-project folder as well as database folder.
+Adjust the path if the file is elsewhere.
+
+SQL commands run inside the sql-project (PostgreSQL) docker container. PostgreSQL tried to find my address such as db-data/games.csv, but
+a check (ls -la /db-data) in the shell after docker compose command and [docker exec -it gamestore_db sh] command,
+it turned out that i don't have a folder like that inside docker container.
+
+Fixed it to load data from json or csv.
+
+7) Interactive API docs are created automatically by FastAPI ( main.py: app = FastAPI(title="GameStore API", version="0.1.0") ):
+localhost:8080/docs 
+
+Expand any GET block -> Try it out -> Execute
 
 
 

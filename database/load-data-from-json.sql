@@ -1,7 +1,7 @@
 -- Read json data from games.json and insert into games table
 WITH json_data AS (
      SELECT jsonb_array_elements(
-        pg_read_file('/db-data/data/db-data/games.json')::jsonb
+        pg_read_file('/db-data/games.json')::jsonb
     ) AS data
 )
 INSERT INTO games (title, genre, release_date, price)
@@ -15,7 +15,7 @@ ON CONFLICT (title) DO NOTHING;
 
 -- Find conflicts and display which field is already taken in accounts (username and/or email)
 WITH json_data AS (
-     SELECT jsonb_array_elements(pg_read_file('/db-data/data/db-data/accounts.json')::jsonb) AS data
+     SELECT jsonb_array_elements(pg_read_file('/db-data/accounts.json')::jsonb) AS data
 ),
 parsed_data AS (
     SELECT data->>'username' AS username, data->>'email' AS email FROM json_data
@@ -36,7 +36,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 WITH json_data AS (
      SELECT jsonb_array_elements(
-        pg_read_file('/db-data/data/db-data/accounts.json')::jsonb
+        pg_read_file('/db-data/accounts.json')::jsonb
     ) AS data
 ),
 parsed_data AS (
