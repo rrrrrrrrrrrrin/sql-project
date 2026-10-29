@@ -159,7 +159,7 @@ a usable version of VS to pass into "generator": field.
 Next time: 
 1. In backend folder: Ctrl + Shift + P, CMake: Build
    cd backend, .\build\Debug\gamestore.exe (run backend)
-2. Website accessible from frontend (cd frontend, nmp run dev)
+2. Website accessible from frontend (cd frontend, npm run dev)
 3. In main folder: docker compose -f docker-compose-with-init.yml up -d
    docker ps (to list all running docker containers)
    docker exec -it gamestore_db sh (to access postgres container's shell)

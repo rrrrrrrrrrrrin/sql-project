@@ -3,8 +3,9 @@ CREATE TABLE accounts (
 	username VARCHAR(32) UNIQUE NOT NULL,
 	email VARCHAR(254) UNIQUE NOT NULL,
 	phone_number VARCHAR(15) UNIQUE DEFAULT NULL,
-	password_hash TEXT NOT NULL,  -- TODO: transform input password to hash
-	balance INT
+	password_hash TEXT NOT NULL,
+	balance INT,
+    role VARCHAR(10) DEFAULT 'user' CHECK (role IN ('user', 'publisher')) NOT NULL
 );
 
 CREATE TABLE games (

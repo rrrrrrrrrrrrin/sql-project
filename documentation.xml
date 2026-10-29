@@ -57,6 +57,11 @@
                         <constraints>NULL ALLOWED</constraints>
                         <data_type>INT</data_type>
                     </element>
+                    <element>
+                        <name>role</name>
+                        <constraints>NOT NULL; DEFAULT 'user'; CHECK (role IN ('user', 'publisher'))</constraints>
+                        <data_type>VARCHAR(10)</data_type>
+                    </element>
                 </columns>
             </element>
 
