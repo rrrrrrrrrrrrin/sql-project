@@ -1,0 +1,10 @@
+1. In main folder: docker compose -f docker-compose-with-init.yml up -d
+   docker exec -it gamestore_db sh 
+   psql -U postgres
+   localhost:5050
+2. In backend folder: .\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8080
+   localhost:8080
+3. In frontend folder: nmp run dev
+   localhost:5173
+
+
