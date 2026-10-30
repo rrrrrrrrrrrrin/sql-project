@@ -155,4 +155,36 @@ Expand any GET block -> Try it out -> Execute
 
 8) Make React frontend fetch games from PostgreSQL database via FastAPI
 
+9) Added a row "role" to accounts table. 
+Temporary in terminal (if new acccounts table wasn't initialized):
+ALTER TABLE accounts
+ADD COLUMN role VARCHAR(10) DEFAULT 'user' CHECK (role IN ('user', 'publisher')) NOT NULL;
+
+[10) Publishing a game (only an account with a role "publisher" can do it). 
+Do it in backend first, then frontend. But first, do authentication of users (accounts).
+
+Passwords in the backend should be hashed in the same way that they are hashed in the database (pgcrypto with Blowfish (bf)):
+crypt(data->>'password_hash', gen_salt('bf')) AS password_hash]
+
+[11) In backend, install the library we'll use to create login tokens.
+It is just a check; it should already be installed from prev steps: 
+.\.venv\Scripts\python.exe -m pip install PyJWT]
+
+12) Add the authentication imports in backend/main.py.
+
+13) Add JWT_SECRET_KEY to backend/.env (should be in backend's .gitignore). Don't share it
+JWT_SECRET_KEY=[secret_key] (I generated it online). 
+
+Python backend will read it via os.getenv(), just as it read DATABASE_URL.
+
+14) In backend/main.py:
+Add authentication configuration;
+Add models: RegisterRequest, LoginRequest;
+Add authentication functions create_access_token, get_current_account, require_publisher;
+Add endpoints: api/register, api/login;
+
+15) (in get_current_account function, in SQL code) 
+The :account_id is a parameter that SQLAlchemy safely supplies from the Python dictionary.
+This is important because parameterized queries help protect against SQL injection.
+
 

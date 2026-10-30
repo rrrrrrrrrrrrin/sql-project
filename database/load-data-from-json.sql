@@ -44,11 +44,12 @@ parsed_data AS (
         data->>'username' AS username,
         data->>'email' AS email,
         -- Encrypts the raw JSON password using Blowfish (bf) salting
-        crypt(data->>'password_hash', gen_salt('bf')) AS password_hash
+        crypt(data->>'password_hash', gen_salt('bf')) AS password_hash,
+        data->>'role' AS role
     FROM json_data
 )
-INSERT INTO accounts (username, email, password_hash)
-SELECT p.username, p.email, p.password_hash
+INSERT INTO accounts (username, email, password_hash, role)
+SELECT p.username, p.email, p.password_hash, p.role
 FROM parsed_data p
 WHERE NOT EXISTS (
     SELECT 1 FROM accounts a 

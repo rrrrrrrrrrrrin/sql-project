@@ -6,5 +6,3 @@
    localhost:8080
 3. In frontend folder: npm run dev
    localhost:5173
-
-

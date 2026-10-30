@@ -8,5 +8,11 @@
         "username": "screamer",
         "email": "LordScreamer@gmail.com",
         "password_hash": "make1t7"
+    },
+    {
+        "username": "i-am-a-publisher",
+        "email": "i.am.a.publisher@example.com",
+        "password_hash": "publisher123",
+        "role": "publisher"
     }
 ]
