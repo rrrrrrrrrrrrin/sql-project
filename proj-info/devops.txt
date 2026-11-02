@@ -6,4 +6,7 @@ For this we need to have:
 frontend/package-lock.json and backend/requirements.txt
 
 It is basic CI, it builds frontend and checks backend's syntax.
+
+After that, in GitHub repo: Actions -> All workflows
+
 2) 

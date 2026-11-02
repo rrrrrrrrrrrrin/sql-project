@@ -1,0 +1,351 @@
+
+============================================================
+                  GAMESTORE PROJECT
+              APPLICATION ARCHITECTURE
+============================================================
+
+1. GENERAL DESCRIPTION
+------------------------------------------------------------
+
+GameStore is a web application for browsing and publishing
+video games.
+
+The application uses a frontend-backend architecture.
+
+Frontend: React + Vite
+Backend: Python + FastAPI
+Database: PostgreSQL
+Database management: pgAdmin
+Database communication: SQLAlchemy
+Authentication: JWT (JSON Web Tokens)
+Containerization: Docker + Docker Compose
+
+
+2. APPLICATION ARCHITECTURE
+------------------------------------------------------------
+
+                     USERS
+                       |
+                       |
+                       v
+              WEB BROWSER
+                       |
+                       v
+              FRONTEND (REACT)
+                 Vite Server
+                       |
+                       |
+                HTTP Requests
+                  (fetch API)
+                       |
+                       v
+                FASTAPI BACKEND
+                       |
+          +------------+------------+
+          |            |            |
+          v            v            v
+      API ROUTES   AUTHENTICATION  VALIDATION
+          |            |            |
+          |            |            |
+          |       JWT Verification  Pydantic
+          |       Role Checking     Models
+          |            |            |
+          +------------+------------+
+                       |
+                       v
+                 SQLALCHEMY
+                       |
+                       v
+                 POSTGRESQL
+                       |
+          +------------+------------+
+          |                         |
+          v                         v
+      ACCOUNTS                    GAMES
+          |                         |
+          |                         |
+      User roles                Game data
+      Passwords                 Game prices
+      Emails                    Release dates
+      Usernames                 Genres
+
+
+3. FRONTEND
+------------------------------------------------------------
+
+Technology:
+- React
+- JavaScript
+- Vite
+- CSS
+
+Responsibilities:
+- Display the GameStore interface.
+- Display the game catalog.
+- Register new users.
+- Log in existing users.
+- Store the JWT token in sessionStorage.
+- Display account information.
+- Display publisher-only functionality.
+- Provide a form for publishing games.
+- Communicate with the backend through HTTP requests.
+
+Main frontend files:
+- App.jsx
+- App.css
+- main.jsx
+
+
+4. BACKEND
+------------------------------------------------------------
+
+Technology:
+- Python
+- FastAPI
+- SQLAlchemy
+- Pydantic
+- PyJWT
+- PostgreSQL driver
+
+Responsibilities:
+- Process HTTP requests from the frontend.
+- Validate incoming data.
+- Register new accounts.
+- Verify login credentials.
+- Generate JWT tokens.
+- Authenticate users.
+- Check user roles and permissions.
+- Retrieve games from PostgreSQL.
+- Publish new games.
+- Return JSON responses.
+
+Main API endpoints:
+
+GET  /                  - Backend status
+GET  /api/health        - API health check
+GET  /api/games         - Retrieve all games
+POST /api/register      - Register an account
+POST /api/login         - Log in
+GET  /api/me            - Retrieve current account
+POST /api/games         - Publish a game (publisher only)
+
+
+5. AUTHENTICATION AND AUTHORIZATION
+------------------------------------------------------------
+
+Registration:
+1. User enters username, email and password.
+2. Frontend sends registration data to FastAPI.
+3. Backend hashes the password using PostgreSQL pgcrypto.
+4. Account is stored in PostgreSQL.
+5. New accounts receive the "user" role.
+
+Login:
+1. User enters username and password.
+2. Backend verifies credentials against password_hash.
+3. Backend generates a JWT token.
+4. Frontend receives and stores the token.
+5. Token is sent in the Authorization header.
+
+Authorization:
+1. Backend extracts the JWT token.
+2. Backend verifies the token signature and expiration.
+3. Backend retrieves the account from PostgreSQL.
+4. Backend checks the account role.
+5. Only publishers can publish games.
+
+Roles:
+- user
+- publisher
+
+
+6. DATABASE
+------------------------------------------------------------
+
+Database management system:
+PostgreSQL
+
+Database name:
+gamestore
+
+Main tables:
+- accounts
+- games
+- dlcs
+- library
+- game_reviews
+- developers
+- publishers
+- game_developers
+- game_publishers
+
+Database responsibilities:
+- Store user accounts.
+- Store password hashes.
+- Store user roles.
+- Store game information.
+- Store reviews and game libraries.
+- Store developer and publisher information.
+
+SQLAlchemy is used for database communication.
+The current backend mainly uses SQLAlchemy Core and
+parameterized SQL queries.
+
+pgAdmin is used to inspect and manage the database.
+
+
+7. DOCKER AND DEVELOPMENT ENVIRONMENT
+------------------------------------------------------------
+
+Docker Compose is used to manage database services.
+
+Currently:
+- PostgreSQL container.
+- pgAdmin container.
+
+Development startup:
+
+Frontend:
+npm run dev
+
+Backend:
+uvicorn main:app --reload --host 127.0.0.1 --port 8080
+
+Frontend address:
+http://localhost:5173
+
+Backend address:
+http://localhost:8080
+
+API documentation:
+http://localhost:8080/docs
+
+
+8. DEVELOPMENT AND CI/CD ARCHITECTURE
+------------------------------------------------------------
+
+Planned CI/CD workflow:
+
+Developer
+    |
+    v
+GitHub Repository
+    |
+    v
+GitHub Actions
+    |
+    +-------------------------+
+    |                         |
+    v                         v
+Frontend Build           Backend Checks
+    |                         |
+    v                         v
+React Static Files       Python Validation
+    |                         |
+    +------------+------------+
+                 |
+                 v
+           Docker Images
+                 |
+                 v
+         Container Registry
+                 |
+                 v
+       Deployment Environment
+                 |
+       +---------+---------+
+       |         |         |
+       v         v         v
+   Frontend   Backend   PostgreSQL
+   Container  Container Container
+
+
+9. USER FLOWS
+------------------------------------------------------------
+
+USER REGISTRATION AND LOGIN:
+
+Open GameStore
+    |
+    v
+Register account
+    |
+    v
+Enter username, email and password
+    |
+    v
+Backend creates account
+    |
+    v
+Log in
+    |
+    v
+Receive JWT token
+    |
+    v
+Browse game catalog
+
+
+PUBLISHER FLOW:
+
+Open GameStore
+    |
+    v
+Log in as publisher
+    |
+    v
+Receive JWT token
+    |
+    v
+Backend verifies account
+    |
+    v
+Publisher dashboard appears
+    |
+    v
+Enter game information
+    |
+    v
+Submit publishing form
+    |
+    v
+Backend checks JWT and role
+    |
+    v
+Insert game into PostgreSQL
+    |
+    v
+Refresh game catalog
+
+
+10. SECURITY
+------------------------------------------------------------
+
+- Passwords are stored as hashes.
+- JWT is used for authentication.
+- JWT tokens have an expiration time.
+- Backend verifies authentication.
+- Backend checks publisher permissions.
+- SQL queries use parameters.
+- Database credentials are stored in .env.
+- Database files are excluded from Git.
+
+
+11. FUTURE IMPROVEMENTS
+------------------------------------------------------------
+
+- Full SQLAlchemy ORM implementation.
+- Alembic database migrations.
+- Automated backend tests.
+- Automated frontend tests.
+- GitHub Actions CI workflow.
+- Frontend Docker image.
+- Backend Docker image.
+- Complete Docker Compose configuration.
+- Automated deployment script.
+- Production deployment.
+- Improved token storage and security.
+
+============================================================
+                    END OF DOCUMENT
+============================================================
