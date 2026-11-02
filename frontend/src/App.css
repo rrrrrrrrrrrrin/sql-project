@@ -1,3 +1,4 @@
+/* Main container for the entire GameStore page */
 .store {
   width: 100%;
   max-width: 1100px;
@@ -7,6 +8,7 @@
   text-align: left;
 }
 
+/* Header section containing the GameStore title and buttons */
 .store-header {
   display: flex;
   justify-content: space-between;
@@ -16,6 +18,7 @@
   border-bottom: 1px solid var(--border);
 }
 
+/* Small text above the main GameStore title */
 .eyebrow {
   margin-bottom: 8px;
   color: var(--accent);
@@ -24,16 +27,19 @@
   letter-spacing: 2px;
 }
 
+/* Main GameStore heading */
 .store-header h1 {
   margin: 0;
   font-size: 42px;
 }
 
+/* Subtitle underneath the GameStore heading */
 .subtitle {
   margin-top: 10px;
   color: var(--text);
 }
 
+/* Styling for the Refresh button and buttons inside error messages */
 .refresh-button,
 .error-message button {
   padding: 10px 16px;
@@ -46,15 +52,18 @@
   cursor: pointer;
 }
 
+/* Styling when the Refresh button is disabled */
 .refresh-button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
+/* Game catalog section */
 .catalog {
   padding-top: 28px;
 }
 
+/* Heading row containing "Game catalog" and the number of games */
 .catalog-heading {
   display: flex;
   justify-content: space-between;
@@ -63,21 +72,25 @@
   margin-bottom: 20px;
 }
 
+/* Removes the default margin around the catalog heading */
 .catalog-heading h2 {
   margin: 0;
 }
 
+/* Styling for the number of games displayed */
 .catalog-heading span {
   color: var(--text);
   font-size: 14px;
 }
 
+/* Grid layout containing all game cards */
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
+/* Individual game card */
 .game-card {
   overflow: hidden;
   border: 1px solid var(--border);
@@ -85,6 +98,7 @@
   background: var(--bg);
 }
 
+/* Image or artwork placeholder at the top of each game card */
 .game-art {
   min-height: 135px;
   display: grid;
@@ -92,14 +106,17 @@
   background: var(--accent-bg);
 }
 
+/* Emoji displayed inside the game artwork area */
 .game-art span {
   font-size: 44px;
 }
 
+/* Container holding the game's information */
 .game-info {
   padding: 18px;
 }
 
+/* Game genre text */
 .game-genre {
   margin-bottom: 8px;
   color: var(--accent);
@@ -109,6 +126,7 @@
   letter-spacing: 1px;
 }
 
+/* Game title */
 .game-info h3 {
   margin: 0 0 12px;
   color: var(--text-h);
@@ -116,11 +134,13 @@
   overflow-wrap: anywhere;
 }
 
+/* Game release date */
 .game-date {
   color: var(--text);
   font-size: 13px;
 }
 
+/* Game price */
 .game-price {
   margin-top: 18px;
   color: var(--text-h);
@@ -128,6 +148,7 @@
   font-weight: 700;
 }
 
+/* Loading messages and error messages */
 .status-message,
 .error-message {
   padding: 20px;
@@ -135,25 +156,128 @@
   border-radius: 10px;
 }
 
+/* Adds space between consecutive paragraphs inside error messages */
 .error-message p+p {
   margin-top: 8px;
 }
 
+/* Adds space above buttons inside error messages */
 .error-message button {
   margin-top: 16px;
 }
-
+/* Responsive styling for smaller screens, such as mobile phones */
 @media (max-width: 600px) {
+  /* Adjusts the main container spacing on smaller screens */
   .store {
     padding: 24px 16px;
   }
 
+  /* Changes the header layout for smaller screens */
   .store-header {
     align-items: flex-start;
     flex-direction: column;
   }
 
+    /* Makes the GameStore title smaller on mobile screens */
   .store-header h1 {
     font-size: 34px;
   }
+}
+
+/* Authentication and publishing form spacing */
+.section-panel {
+  margin: 15px 0;
+  padding: 20px 28px;
+}
+
+/* Space between form fields */
+.section-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 500px;
+  margin-top: 22px;
+}
+
+/* Keep labels and their input fields separated */
+.section-panel form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Make input fields more comfortable */
+.section-panel form input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd2dd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* Space between Login and Register buttons */
+.auth-tabs {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+/* Make buttons larger and easier to click */
+.auth-tabs button,
+.section-panel form button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Separate submit buttons from the fields */
+.section-panel form button {
+  margin-top: 8px;
+  align-self: flex-start;
+  min-width: 140px;
+}
+
+/* Space between account information and other elements */
+.account-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Better spacing on smaller screens */
+@media (max-width: 600px) {
+  .section-panel {
+    padding: 20px;
+  }
+
+  .section-panel form {
+    gap: 16px;
+  }
+}
+
+/* Space between username and role when logged in */
+/* Align username and role to the left */
+.account-summary div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Reduce space between the header and logged-in account section */
+.store-header {
+  padding-bottom: 16px;
+  /* Was 32px */
+}
+
+/* Reduce empty space around the account information */
+.section-panel {
+  margin-top: 8px;
+  padding-top: 12px;
+}
+
+/* Remove the default top margin from the welcome heading */
+.section-panel h2 {
+  margin-top: 0;
 }
