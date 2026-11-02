@@ -6,3 +6,5 @@
    localhost:8080
 3. In frontend folder: npm run dev
    localhost:5173
+
+If node_modules folder is deleted from frontend, npm install to restore it.

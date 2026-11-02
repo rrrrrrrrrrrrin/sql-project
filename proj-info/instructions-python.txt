@@ -187,4 +187,69 @@ Add endpoints: api/register, api/login;
 The :account_id is a parameter that SQLAlchemy safely supplies from the Python dictionary.
 This is important because parameterized queries help protect against SQL injection.
 
+16) Built registration, login and publishing games in backend.
+Now, in frontend building: registration for new users, login for existing users,
+logout, publishin games (only if the role is 'publisher')
 
+We will use sessionStorage (doesn't save data after browser refresh) to keep the login token for the current browser tab.
+
+17) Add /api/me endpoint to main.py 
+for the frontend to check whether a previously logged-in user 
+still has a valid token when the page is refreshed
+
+
+18) Frontend, App.jsx:
+1. Add const:
+	Authentication state:
+	const [token, setToken] 
+	const [account, setAccount]
+
+	Login and registration form:
+	const [authMode, setAuthMode]
+	const [authLoading, setAuthLoading]
+	const [authError, setAuthError]
+	const [authMessage, setAuthMessage]
+
+	Publishing form:
+	const [gameForm, setGameForm] 
+	const [publishLoading, setPublishLoading]
+	const [publishError, setPublishError]
+	const [publishMessage, setPublishMessage]
+
+useState allows a React component to remember information 
+that can change while the application is running.
+
+const [variable, setVariable] = useState(initialValue);
+variable Holds the current value
+
+setVariable Function used to change the value
+initialValue Value the variable starts with 
+
+
+When a user successfully logs in, your Python backend creates a JWT (JSON Web Token).
+The token is proof that the user has successfully logged in.
+We need to keep it because the frontend must send it whenever the user 
+tries to access a protected endpoint, such as publishing a game.
+
+2. Functions for authentication:
+	async function restoreSession()
+	function handleAuthChange(event)
+	async function handleAuthSubmit(event)
+	function logout()
+
+[async function Means we can use await inside the function.
+The await keyword tells JavaScript to wait for the HTTP response from backend]
+[Object destructing: const { name, value } = event.target; ] 
+[A computed property name: [name]: value ]
+
+3. Functions for publishing:
+	function handleGameChange(event)
+	async function handlePublishSubmit(event)
+
+4. Add restoreSession(); to useEffect React component
+
+5. Add the login and registration forms on the web page.
+6. Add the publishing form on the web page.
+
+
+19) 

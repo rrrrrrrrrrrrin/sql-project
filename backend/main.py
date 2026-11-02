@@ -152,7 +152,7 @@ def get_current_account(token: str = Depends(oauth2_scheme)):
 
 
 # This function checks whether the authenticated account is a publisher
-# FastAPI automatically runs get_current_account() (verifies the token and returns account information)
+# Depends tells FastAPI to run get_current_account() (verifies the token and returns account information)
 def require_publisher(account: dict = Depends(get_current_account)):
     if account["role"] != "publisher":
         raise HTTPException(
@@ -175,6 +175,18 @@ def home():
 @app.get("/api/health")
 def health_check():
     return {"status": "ok"}
+
+
+# This endpoint is for the frontend to check 
+# whether a previously logged-in user 
+# still has a valid token when the page is refreshed
+#
+# Receives the token from the Authorization header
+# Calls get_current_account() to verify it
+# Returns the account information, including its actual role from PostgreSQL
+@app.get("/api/me")
+def get_me(account: dict = Depends(get_current_account)):
+    return account
 
 
 # Return a list of all games in the database, including game_id, title, release_date, genre, and price.
