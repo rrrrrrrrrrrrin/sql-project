@@ -1,0 +1,9 @@
+1) Set CI (Continuous Integration) in GitHub repo via GitHub Actions.
+In sql-project folder: 
+.github/workflows/ci.yml
+
+For this we need to have: 
+frontend/package-lock.json and backend/requirements.txt
+
+It is basic CI, it builds frontend and checks backend's syntax.
+2) 
