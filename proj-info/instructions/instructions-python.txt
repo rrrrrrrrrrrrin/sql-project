@@ -251,5 +251,4 @@ The await keyword tells JavaScript to wait for the HTTP response from backend]
 5. Add the login and registration forms on the web page.
 6. Add the publishing form on the web page.
 
-
 19) 

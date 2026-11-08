@@ -8,4 +8,21 @@ frontend/package-lock.json and backend/requirements.txt
 It is basic CI, it builds frontend and checks backend's syntax.
 
 After that, in GitHub repo: Actions -> All workflows
-2) 
+
+2) Create a reserve copy of PostgreSQL. In VSC:
+docker compose -f docker-compose-with-init.yml up -d
+docker exec gamestore_db pg_dump -U postgres -d gamestore -Fc -f /tmp/gamestore_backup.dump
+docker cp gamestore_db:/tmp/gamestore_backup.dump "$env:USERPROFILE\Desktop\gamestore_backup.dump"
+ 
+3) How to create/save/load ERD in pgAdmin.
+Create: Servers -> gamestore_db -> (Databases -> gamestore) -> Schemas -> public
+        Right-click on public, ERD for Schema
+Save: png (erases links, just take a screenshot instead),
+      Save as (saves the file in Tools -> Storage Manager [extension: "All files" or ".pgerd"],
+      can download the file from web pgAdmin Storage Manager to your computer)
+Load: Tools -> Storage Manager -> click three dots at the top-right corner -> Upload
+      The file will be loaded to Storage Manager
+
+4) Swagger (API docs): http://localhost:8080/docs
+Add description of endpoints, which endpoints require JWT in file API-documentation.md
+

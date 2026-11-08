@@ -1,3 +1,5 @@
+# ** Matches any number of directories, at any depth
+
 # PostgreSQL database files
 pgdata/
 **/pgdata/

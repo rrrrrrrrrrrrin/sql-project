@@ -436,13 +436,24 @@
     
     <!-- UI/API-->
     <interfaces>
-        <ui>Описание пользовательского интерфейса (UI)</ui>
-        <api>Описание программного интерфейса (API)</api>
+        <ui>
+        Пользовательский интерфейс (UI) реализован, используя React, 
+        JavaScript, HTML, CSS. Он предоставляет каталог игр, регистрацию и авторизацию
+        пользователей, а также возможность издателям добавлять игры в каталог.
+        </ui>
+        
+        <api>
+        Программный интерфейс (API) реализован, используя Python и FastAPI.
+        Подробное описание endpoints, форматов запросов и ответов (request and response),
+        требований аутентификации и HTTP статус кодов документировано в docs/API-documentation.md.
+        Интерактивная документация API доступна по адресу: localhost:8080/docs. 
+        Схема OpenAPI доступна по адресу: localhost:8080/openapi.json.
+        </api>
     </interfaces>
     
     <!-- Технологии разработки -->
     <tech-stack>
-        <programming-lang>Database: SQL, backend: C++, frontend: HTML/CSS/TypeScript</programming-lang>
+        <programming-lang>Database: SQL, backend: Python, frontend: JavaScript, HTML and CSS</programming-lang>
         <dbms>PostgreSQL</dbms>
     </tech-stack>
     

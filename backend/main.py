@@ -49,7 +49,7 @@ app = FastAPI(title="GameStore API", version="0.1.0")
 
 # Models define what information our API expects
 # They also validate incoming data
-
+#
 # This describes the data the frontend must send when publishing a game
 class GameCreate(BaseModel):
     title: str
@@ -163,16 +163,31 @@ def require_publisher(account: dict = Depends(get_current_account)):
     return account
 
 
+# tags:
+# General — root and health check.
+# Authentication — register, login and get info about current account.
+# Games — get games and publish games.
+
 # API endpoints: home, health check, get games, api/register, api/login, api/games (publish game)
 # Open the root URL and returns a message confirming that the backend is running: localhost:8080
-@app.get("/")
+@app.get(
+        "/",
+        summary="Home page",
+        description="Returns a message confirming that the Python backend is running.",
+        tags=["General"],
+        )
 def home():
     return {"message": "GameStore Python backend is running!"}
 
 
 # Return a simple status message. It does not check whether PostgreSQL is reachable:
 # localhost:8080/api/health
-@app.get("/api/health")
+@app.get(
+        "/api/health",
+        summary="Health check",
+        description="Returns a simple status message. It does not check whether PostgreSQL is reachable.",
+        tags=["General"],
+        )
 def health_check():
     return {"status": "ok"}
 
@@ -184,14 +199,24 @@ def health_check():
 # Receives the token from the Authorization header
 # Calls get_current_account() to verify it
 # Returns the account information, including its actual role from PostgreSQL
-@app.get("/api/me")
+@app.get(
+        "/api/me",
+        summary="Get current user's information",
+        description="Returns the information of the currently authenticated user, including their role.",
+        tags=["Authentication"],
+        )
 def get_me(account: dict = Depends(get_current_account)):
     return account
 
 
 # Return a list of all games in the database, including game_id, title, release_date, genre, and price.
 # localhost:8080/api/games
-@app.get("/api/games")
+@app.get(
+        "/api/games",
+        summary="Get all games",
+        description="Returns all games stored in the GameStore database, games table, ordered by game ID.",
+        tags=["Games"],
+         )
 def get_games():
     try:
         # Connect to PostgreSQL (closes the connection when with block finishes)
@@ -232,7 +257,13 @@ def get_games():
 # The function receives the registration information in the request body
 #   HTTP method: POST (sends data to the server: frontend -> backend)
 #   URL: /api/register
-@app.post("/api/register", status_code=201)
+@app.post(
+        "/api/register", 
+        status_code=201,
+        summary="Register a new account",
+        description="Creates a new user account. New registrations cannot assign themselves the publisher role.",
+        tags=["Authentication"],
+        )
 def register(data: RegisterRequest):
     # Checking the role: new accounts can only register as users
     if data.role != "user":
@@ -278,7 +309,12 @@ def register(data: RegisterRequest):
 
 
 # This endpoint allows an existing account to log in
-@app.post("/api/login")
+@app.post(
+        "/api/login",
+        summary="Log in and obtain JWT",
+        description="Verifies username and password and returns a signed JWT access token.",
+        tags=["Authentication"],
+        )
 # The endpoint receives username and password
 # The Form(...) means that FastAPI expects form-encoded data rather than JSON
 # We use this because Swagger's OAuth2 password flow sends form data
@@ -334,7 +370,13 @@ def login(
 # Endpoint: publish a new game
 # Only accounts with the role of "publisher" can publish games
 # The account_id is sent in the request body along with the game data
-@app.post("/api/games", status_code=201)
+@app.post(
+        "/api/games", 
+        status_code=201,
+        summary="Publish a new game",
+        description="Adds a game to games table. Requires a valid JWT belonging to an account with the publisher role.",
+        tags=["Games"],
+        )
 def publish_game(
     game: GameCreate,
     account: dict = Depends(require_publisher),
