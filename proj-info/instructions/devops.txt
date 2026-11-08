@@ -24,5 +24,15 @@ Load: Tools -> Storage Manager -> click three dots at the top-right corner -> Up
       The file will be loaded to Storage Manager
 
 4) Swagger (API docs): http://localhost:8080/docs
-Add description of endpoints, which endpoints require JWT in file API-documentation.md
+Add 
+API Overview, 
+Architecture and Communication, 
+Authentication and Authorization,
+Data Validation!!!, 
+HTTP Status Codes and Error Handling (description of general HTTP codes that can be returned by API), 
+API Request Conventions (in which format frontend sends info),
+API Specification and Interactive Documentation (refer to Swagger)
+sections in file API-documentation.md as an addition to Swagger.
+
+5) Describe project's architecture
 

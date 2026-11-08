@@ -1,0 +1,25 @@
+Издание игр; role: publisher
+
+Открывает GameStore
+       ↓
+Входит в систему как publisher
+       ↓
+Backend проверяет пароль
+       ↓
+Backend выдаёт JWT токен
+       ↓
+Frontend получает роль publisher
+       ↓
+Отображается форма публикации игры
+       ↓
+Publisher вводит информацию об игре
+       ↓
+Отправляется POST /api/games из frontend в backend
+       ↓
+Backend проверяет JWT токен и роль пользователя
+       ↓
+Игра добавляется в PostgreSQL
+       ↓
+Каталог обновляется
+       ↓
+Выходит из аккаунта
