@@ -134,7 +134,11 @@ docker start gamestore_test_db
 
 Set the connection URL in PowerShell 
 (we are in .venv [activated virtual environment]):
+
 Install psycopg2 driver: python -m pip install psycopg2-binary
+
+Add [psycopg2-binary==2.9.13] in backend/requirements.txt. 
+
 $env:TEST_DATABASE_URL = "postgresql+psycopg2://postgres:test_password@localhost:5434/gamestore_test"
 
 Run pytest from the backend directory:
@@ -152,4 +156,4 @@ Edit ci.yml
 
 Commit and push.
 
-2.5
+2.5 
