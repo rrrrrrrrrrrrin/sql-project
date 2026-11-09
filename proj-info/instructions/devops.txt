@@ -155,7 +155,3 @@ and use the separate test database.
 Edit ci.yml
 
 Commit and push.
-
-2.5 The problem: the tables are not being created in the PostgreSQL test database during CI.
-Solution: update [-name: Initialize test database schema] block in ci.yml
-
