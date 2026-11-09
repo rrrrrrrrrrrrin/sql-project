@@ -41,6 +41,11 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      - name: Run frontend tests
+        working-directory: frontend
+        run: npm run test
+
+
   # Check Python backend
   backend:
     name: Backend check
