@@ -8,7 +8,7 @@ on:
     branches: [main, master]
 
   # Allow manual execution of the workflow from GitHub Actions tab
-  workflows_dispatch:  
+  workflow_dispatch:  
 
 # Give the workflow read-only repository access
 permissions:
