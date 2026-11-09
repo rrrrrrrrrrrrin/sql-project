@@ -34,5 +34,38 @@ API Request Conventions (in which format frontend sends info),
 API Specification and Interactive Documentation (refer to Swagger)
 sections in file API-documentation.md as an addition to Swagger.
 
-5) Describe project's architecture
+5) Describe project's architecture. 
+Add points of improvement. 
+Add TODO of visualizaions of architectures 
+(general architecture, ER-diagram, user flows, CI/CD, Docker deployment)
+
+6) Implement CI/CD (Continuous Integration/Deployment) and Docker deployment
+1. CI (automatically checks the code whenever changes are pushed to GitHub)
+2. Add automated tests
+3. Prepare Docker for the whole application:
+frontend/Dockerfile, backend/Dockerfile, update docker-compose.yml
+4. CD
+
+1.1 [requirements.txt is in UTF-16 LE, needs to be in UTF-8:
+
+Format-Hex .\backend\requirements.txt | Select-Object -First 2
+
+Look at the first bytes: FF FE - UTF-16 LE
+
+In root:
+
+# Путь к файлу
+$path = ".\backend\requirements.txt"
+
+# Читаем файл в исходной кодировке UTF-16 LE
+$content = Get-Content -Path $path -Raw -Encoding Unicode
+
+# Сохраняем в UTF-8 без BOM
+$fullPath = (Resolve-Path $path).Path
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+
+[System.IO.File]::WriteAllText($fullPath, $content, $utf8)]
+
+1.2 Edit .github/workflows/ci.yml
+Added permissions, workflow_dispatch, dependecy catching in backend.
 
