@@ -98,6 +98,7 @@ jobs:
         run: python -m pytest -v
         
       # Initialize the test database schema before running integration tests
+      
       - name: Initialize test database schema
         run: |
           python - <<'PY'
@@ -107,13 +108,25 @@ jobs:
           import psycopg2
           from sqlalchemy.engine import make_url
 
-          # Read and verify the test database URL
+          # Locate and read the SQL initialization file
+          schema_path = Path("database/init.sql").resolve()
+
+          if not schema_path.is_file():
+              raise FileNotFoundError(
+                  f"Database schema not found: {schema_path}"
+              )
+
+          schema_sql = schema_path.read_text(encoding="utf-8")
+
+          print(f"Initializing schema from: {schema_path}")
+          print(f"SQL file size: {len(schema_sql)} characters")
+
+          # Connect only to the dedicated test database
           url = make_url(os.environ["TEST_DATABASE_URL"])
 
           if url.database != "gamestore_test":
-              raise RuntimeError("Unexpected database name!")
+              raise RuntimeError("Refusing to initialize a non-test database!")
 
-          # Connect to PostgreSQL
           connection = psycopg2.connect(
               dbname=url.database,
               user=url.username,
@@ -123,13 +136,98 @@ jobs:
           )
 
           try:
-              # Execute the database initialization script
-              with connection:
-                  with connection.cursor() as cursor:
-                      schema = Path("database/init.sql")
-                      cursor.execute(schema.read_text(encoding="utf-8"))
+              # Execute the complete SQL schema
+              with connection.cursor() as cursor:
+                  cursor.execute(schema_sql)
 
-              print("Test database schema initialized successfully!")
+              connection.commit()
+
+              # Verify that all expected tables were created
+              required_tables = {
+                  "accounts",
+                  "games",
+                  "dlcs",
+                  "library",
+                  "game_reviews",
+                  "developers",
+                  "publishers",
+                  "game_developers",
+                  "game_publishers"
+              }
+
+              with connection.cursor() as cursor:
+                  cursor.execute("""
+                      SELECT table_name
+                      FROM information_schema.tables
+                      WHERE table_schema = 'public'
+                  """)
+
+                  existing_tables = {
+                      row[0] for row in cursor.fetchall()
+                  }
+
+              missing_tables = required_tables - existing_tables
+
+              if missing_tables:
+                  raise RuntimeError(
+                      f"Missing tables: {sorted(missing_tables)}"
+                  )
+
+              print("All 9 database tables initialized successfully!")
+
+          finally:
+              connection.close()
+          PY
+
+      - name: Verify test database schema
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg2
+          from sqlalchemy.engine import make_url
+
+          url = make_url(os.environ["TEST_DATABASE_URL"])
+
+          connection = psycopg2.connect(
+              dbname=url.database,
+              user=url.username,
+              password=url.password,
+              host=url.host,
+              port=url.port or 5432
+          )
+
+          required_tables = {
+              "accounts",
+              "games",
+              "dlcs",
+              "library",
+              "game_reviews",
+              "developers",
+              "publishers",
+              "game_developers",
+              "game_publishers"
+          }
+
+          try:
+              with connection.cursor() as cursor:
+                  cursor.execute("""
+                      SELECT table_name
+                      FROM information_schema.tables
+                      WHERE table_schema = 'public'
+                  """)
+
+                  existing_tables = {
+                      row[0] for row in cursor.fetchall()
+                  }
+
+              missing_tables = required_tables - existing_tables
+
+              if missing_tables:
+                  raise RuntimeError(
+                      f"Missing database tables: {sorted(missing_tables)}"
+                  )
+
+              print("All nine database tables exist!")
 
           finally:
               connection.close()
