@@ -46,6 +46,7 @@ Add TODO of visualizaions of architectures
 frontend/Dockerfile, backend/Dockerfile, update docker-compose.yml
 4. CD
 
+
 1.1 [requirements.txt is in UTF-16 LE, needs to be in UTF-8:
 
 Format-Hex .\backend\requirements.txt | Select-Object -First 2
@@ -69,3 +70,23 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 1.2 Edit .github/workflows/ci.yml
 Added permissions, workflow_dispatch, dependecy catching in backend.
 
+
+2.1 In backend folder:
+Create requirements-dev.txt.
+Add tests folder. Add test_api.py in tests.
+
+Run tests locally first.
+In VSC install development dependencies [in sql-project root folder!!!]:
+.\backend\.venv\Scripts\python.exe -m pip install -r .\backend\requirements-dev.txt
+
+Set a temporary SQLite URL so importing the application doesn't use the actual PostgreSQL database:
+$env:DATABASE_URL = "sqlite+pysqlite:///:memory:"
+$env:JWT_SECRET_KEY = "test-secret-key"
+
+Now run pytest:
+cd backend
+.\.venv\Scripts\python.exe -m pytest -v
+cd ..
+
+Tests should be pass.
+Add tests to GitHub Actions: edit ci.yml.
