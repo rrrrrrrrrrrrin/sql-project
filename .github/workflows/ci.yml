@@ -46,6 +46,27 @@ jobs:
     name: Backend check
     runs-on: ubuntu-latest
 
+    # Start a temporary PostgreSQL container for testing
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: gamestore_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d gamestore_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    # Environment variables for integration tests
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg2://postgres:test_password@localhost:5432/gamestore_test
+      JWT_SECRET_KEY: pytest-only-secrSet
+
     steps:
       - name: Download repository
         uses: actions/checkout@v4
@@ -74,8 +95,42 @@ jobs:
 
       - name: Run backend tests
         working-directory: backend
-        env:
-          DATABASE_URL: "sqlite+pysqlite:///:memory:"
-          JWT_SECRET_KEY: "test-secret-key-for-ci"
         run: python -m pytest -v
         
+      # Initialize the test database schema before running integration tests
+      - name: Initialize test database schema
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          import psycopg2
+          from sqlalchemy.engine import make_url
+
+          # Read and verify the test database URL
+          url = make_url(os.environ["TEST_DATABASE_URL"])
+
+          if url.database != "gamestore_test":
+              raise RuntimeError("Unexpected database name!")
+
+          # Connect to PostgreSQL
+          connection = psycopg2.connect(
+              dbname=url.database,
+              user=url.username,
+              password=url.password,
+              host=url.host,
+              port=url.port or 5432
+          )
+
+          try:
+              # Execute the database initialization script
+              with connection:
+                  with connection.cursor() as cursor:
+                      schema = Path("database/init.sql")
+                      cursor.execute(schema.read_text(encoding="utf-8"))
+
+              print("Test database schema initialized successfully!")
+
+          finally:
+              connection.close()
+          PY

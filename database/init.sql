@@ -1,3 +1,6 @@
+-- Enable password hashing functions
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE accounts (
 	account_id SERIAL PRIMARY KEY,
 	username VARCHAR(32) UNIQUE NOT NULL,
